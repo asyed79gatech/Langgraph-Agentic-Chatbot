@@ -9,13 +9,13 @@ class Config:
         self.config_parser.read(config_file_path)
 
     def get_llm_options(self):
-        return self.config_parser["DEFAULT"].get("LLM_OPTIONS").split(", ")
+        return self.config_parser["DEFAULT"].get("LLM_OPTIONS")
     
     def groq_model_options(self):
         return self.config_parser['DEFAULT'].get("GROQ_MODEL_OPTIONS").split(", ")
     
     def use_case_options(self):
-        return self.config_parser['DEFAULT'].get("USE_CASE_OPTIONS").split(", ")
+        return self.config_parser['DEFAULT'].get("USECASE_OPTIONS").split(", ")
     
     def page_title(self):
         return self.config_parser['DEFAULT'].get("PAGE_TITLE")
