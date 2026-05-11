@@ -17,12 +17,17 @@ def load_agenticai_app():
 
     ui = LoadStreamlitUI()
     user_input = ui.load_streamlitui()
-
+    
+    
     if not user_input:
         st.error("Failed to load user input from UI")
 
         return
-    user_message = st.chat_input("Enter your message:")
+    
+    if st.session_state.IsFetchButtonPressed == True:
+        user_message = st.session_state.time_frame
+    else: 
+        user_message = st.chat_input("Enter your message:")
 
     if user_message:
         try:
@@ -45,6 +50,7 @@ def load_agenticai_app():
             try:
                 # Run the approprate graph based on the usecase
                 graph = graph_builder.select_graph(usecase=usecase)
+                print("Graph created")
 
                 # Return the result of the graph run to the UI
                 DisplayResultStreamlit(usecase=usecase, user_message=user_message, graph=graph).display_result_ui()
@@ -54,14 +60,6 @@ def load_agenticai_app():
         except Exception as e:
             st.error(f"Graph was unable to execute. Details: {e}")
 
-            
-
-
-
-
-
-
-
-        
+                    
         except Exception as e:
             raise ValueError(f"Something went wrong. Details: {e}")
