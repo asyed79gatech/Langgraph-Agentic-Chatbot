@@ -1,5 +1,6 @@
 import streamlit as st
 from src.langgraphagenticai.ui.streamlitui.uiconfigfile import Config
+import os
 
 class LoadStreamlitUI:
 
@@ -24,6 +25,9 @@ class LoadStreamlitUI:
                     st.warning("Please enter your GROQ API key to continue")
 
             usecase_options = self.config.use_case_options()
-            self.user_controls["selected_usecase"] = st.selectbox("Select Usecase", usecase_options) 
+            self.user_controls["selected_usecase"] = st.selectbox("Select Usecase", usecase_options)
+            if self.user_controls["selected_usecase"] == "Chatbot with Web Search":
+                self.user_controls["TAVILY_API_KEY"] = st.session_state["TAVILY_API_KEY"] = st.text_input("TAVILY_API_KEY", type="password")
+                os.environ["TAVILY_API_KEY"] = self.user_controls["TAVILY_API_KEY"]
 
         return self.user_controls
